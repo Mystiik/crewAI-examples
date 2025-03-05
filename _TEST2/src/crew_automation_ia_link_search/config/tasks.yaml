@@ -1,0 +1,48 @@
+---
+extract_figma_data:
+  description: 'Use SeleniumScrapingTool to scrape all available information (texts,
+    images, layout details, and embedded instructions) from the Figma URL: {figma_link}.'
+  expected_output: A comprehensive dataset containing text content, images, layout
+    design details, and metadata extracted from the Figma prototype.
+  async_execution: false
+  agent: figma_extractor
+parse_figma_content:
+  description: Analyze the data from the extract_figma_data task to identify key visual
+    elements, design language, and any product-specific branding details from the
+    Figma content.
+  expected_output: A structured summary highlighting essential elements, themes, and
+    unique selling propositions extracted from {figma_link}.
+  async_execution: false
+  agent: content_parser
+  context:
+  - extract_figma_data
+create_social_media_post:
+  description: Generate an engaging French social media post for Facebook and Instagram,
+    utilizing the summary from parse_figma_content task. The post should integrate
+    design elements and cues from {figma_link}.
+  expected_output: A well-crafted French post with compelling content, visuals, and
+    calls-to-action aligned with both Facebook and Instagram requirements.
+  async_execution: false
+  agent: post_creator
+  context:
+  - parse_figma_content
+search_french_audience:
+  description: Use WebsiteSearchTool to search for French profiles, communities, or
+    influencers interested in modern UI design, digital art, and Airbnb-inspired aesthetics,
+    as indicated by the design in {figma_link}.
+  expected_output: A curated list of potential French audience members (profiles,
+    communities, influencer pages) relevant to the design and product concept.
+  async_execution: false
+  agent: audience_searcher
+distribute_post:
+  description: Send the generated French social media post (from create_social_media_post
+    task) to the list of French audience members identified in the search_french_audience
+    task through suitable channels such as Facebook groups, Instagram tags or direct
+    messaging.
+  expected_output: Successful distribution of the post along with engagement logs
+    and initial feedback from the target French audience.
+  async_execution: false
+  agent: outreach_coordinator
+  context:
+  - search_french_audience
+  - create_social_media_post

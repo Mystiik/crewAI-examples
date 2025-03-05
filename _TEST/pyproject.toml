@@ -1,0 +1,23 @@
+[project]
+name = "tachatte"
+version = "0.1.0"
+description = "tachatte using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "crewai[tools]>=0.102.0,<1.0.0"
+]
+
+[project.scripts]
+tachatte = "tachatte.main:run"
+run_crew = "tachatte.main:run"
+train = "tachatte.main:train"
+replay = "tachatte.main:replay"
+test = "tachatte.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
